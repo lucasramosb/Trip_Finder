@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import React from "react";
 
+//rota de api
 export async function GET() {
 
     const trips = await prisma.trip.findMany();
