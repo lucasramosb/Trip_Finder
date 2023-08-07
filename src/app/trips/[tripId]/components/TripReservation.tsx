@@ -25,7 +25,10 @@ const TripReservation = ({trip} : TripReservationProps) => {
                 <p className="font-medium text-sm text-primaryDarker">Total:</p>
             </div>
 
-            <Button className="mt-5">Reservar</Button>
+            <div className="pb-10 border-b border-b-grayLighter w-full">
+                <Button className="mt-5 w-full">Reservar</Button>
+            </div>
+
         </div>
      );
 }
