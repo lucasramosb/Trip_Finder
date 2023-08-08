@@ -8,7 +8,9 @@ import React from "react";
 import { Controller, useForm } from "react-hook-form";
 
 interface TripReservationProps {
-    trip: Trip
+    tripStartDate: Date,
+    tripEndDate: Date,
+    maxGuests: number
 }
 
 interface TripReservationForm {
@@ -17,13 +19,15 @@ interface TripReservationForm {
     endDate: Date | null
 }
 
-const TripReservation = ({trip} : TripReservationProps) => {
+const TripReservation = ({tripStartDate, tripEndDate, maxGuests} : TripReservationProps) => {
 
-    const {register, handleSubmit, formState: {errors}, control} = useForm<TripReservationForm>();
+    const {register, handleSubmit, formState: {errors}, control, watch} = useForm<TripReservationForm>();
 
     const onSubmit = (data: any) => {
         console.log(data);
     }
+
+    const startDate = watch("startDate");
 
     return ( 
         <div className="flex flex-col px-5">
@@ -34,7 +38,17 @@ const TripReservation = ({trip} : TripReservationProps) => {
                         required: {value: true, message: "Data de inicio é obrigatório"},
                     }}
                     control={control}
-                    render={({ field }) => <DatePicker error={!!errors?.startDate} errorMessage={errors.startDate?.message} onChange={field.onChange} selected={field.value} placeholderText="Data de inicio" className="w-full" /> }
+                    
+                    render={({ field }) =>
+                    <DatePicker 
+                    error={!!errors?.startDate} 
+                    errorMessage={errors.startDate?.message} 
+                    onChange={field.onChange} 
+                    selected={field.value} 
+                    placeholderText="Data de inicio" 
+                    className="w-full"
+                    minDate={tripStartDate}
+                     /> }
                 />
                 
                 <Controller
@@ -43,7 +57,18 @@ const TripReservation = ({trip} : TripReservationProps) => {
                         required: {value: true, message: "Data final é obrigatória"},
                     }}
                     control={control}
-                    render={({ field }) => <DatePicker error={!!errors?.endDate} errorMessage={errors.endDate?.message} onChange={field.onChange} selected={field.value} placeholderText="Data Final" className="w-full" /> }
+
+                    render={({ field }) => 
+                    <DatePicker 
+                    error={!!errors?.endDate} 
+                    errorMessage={errors.endDate?.message} 
+                    onChange={field.onChange} 
+                    selected={field.value} 
+                    placeholderText="Data Final" 
+                    className="w-full"
+                    maxDate={tripEndDate}
+                    minDate={startDate ?? tripStartDate}
+                    /> }
                 />
             </div>
 
