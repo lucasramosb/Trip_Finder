@@ -30,7 +30,7 @@ const Header = () => {
                 <div className='relative h-[32px] w-[182px]'>
                     <div className='flex gap-2'>
                         <Image src="/Vector.png" className='' alt="FSW Trips" width={30} height={30} />
-                        <p className='text-xl font-medium text-primary'>Trip Finder</p>                    
+                        <p className='text-xl font-semibold text-primary mt-1'>Trip Finder</p>                    
                     </div>
                 </div>
             </Link>
