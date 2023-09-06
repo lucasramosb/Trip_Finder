@@ -25,7 +25,7 @@ interface TripReservationForm {
 
 const TripReservation = ({tripId, tripStartDate, tripEndDate, maxGuests, pricePerDay} : TripReservationProps) => {
 
-    const {register, handleSubmit, formState: {errors}, control, watch} = useForm<TripReservationForm>();
+    const {register, handleSubmit, formState: {errors}, control, watch, setError} = useForm<TripReservationForm>();
 
     const onSubmit = async (data: TripReservationForm) => {
         const response = await fetch('http://localhost:3000/api/trips/check',{
@@ -39,6 +39,20 @@ const TripReservation = ({tripId, tripStartDate, tripEndDate, maxGuests, pricePe
 
         const res = await response.json();
         console.log({ res });
+
+        //VALIDAR SE A DATA JA ESTA RESERVADA
+        if(res?.error?.code === 'TRIP_ALREADY_RESERVED'){
+            setError("startDate", {message: "Esta data ja esta reservada", type: "manual"});
+            return setError("endDate", {message: "Esta data ja esta reservada", type: "manual"});
+        }
+
+        //VALIDAR SE A RESERVA ESTA SENDO FEITA DENTRO DE UMA DATA DISPONIVEL
+        if(res?.error?.code === 'INVALID_START_DATE'){
+            setError("startDate", {message: "Esta data não esta disponivel", type: "manual"});
+        }
+        if(res?.error?.code === 'INVALID_END_DATE'){
+            return setError("endDate", {message: "Esta data não esta disponivel", type: "manual"});
+        }
     }
 
     const startDate = watch("startDate");
@@ -88,11 +102,13 @@ const TripReservation = ({tripId, tripStartDate, tripEndDate, maxGuests, pricePe
             </div>
 
             <Input 
-            {...register("guests", {required: {value: true, message: "Número de hóspedes é obrigatório"}})}
+            {...register("guests", {required: {value: true, message: "Número de hóspedes é obrigatório"}, 
+                max: {value: maxGuests, message: `Número de hospedes não pode ser maior que ${maxGuests}`}})}
             errorMessage={errors?.guests?.message}
-            error={!!errors?.guests} 
-            placeholder="Número de hóspedes" 
+            error={!!errors?.guests}
+            placeholder={`Número de hóspedes (max: ${maxGuests})`} 
             className="mt-4"
+            type="number"
             />
 
             <div className="flex justify-between mt-7">
