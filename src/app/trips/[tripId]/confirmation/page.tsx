@@ -9,7 +9,8 @@
     import ptBR from "date-fns/locale/pt-BR";
     import Button from "@/components/Button";
     import { useSession } from "next-auth/react";
-    import { useRouter } from "next/router";
+    import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
     const TripConfirmation = ({params}: {params: {tripId: string}}) => {
 
@@ -18,7 +19,7 @@
 
         const searchParams = useSearchParams()
 
-        const {status} = useSession()
+        const {status, data} = useSession()
         const router = useRouter()
 
         useEffect(() => {
@@ -53,6 +54,30 @@
         const startDate = new Date(searchParams.get('startDate') as string);
         const endDate = new Date(searchParams.get('endDate') as string);
         const guests = searchParams.get('guests')
+
+        const handleBuyClick = async () => {
+            const res = await fetch('http://localhost:3000/api/trips/reservation', {
+                method: "POST",
+                body: Buffer.from(
+                    JSON.stringify({
+                        tripId: params.tripId,
+                        endDate: searchParams.get("endDate"),
+                        startDate: searchParams.get("startDate"), 
+                        guests: Number(searchParams.get("guests")),
+                        userId: (data?.user as any)?.id!,
+                        totalPaid: totalPrice
+                    })
+                ),
+            });
+
+            if(!res.ok){
+                return toast.error("Ocorreu um erro ao realizar a reserva")
+            }
+
+            router.push('/')
+
+            toast.success("Reserva realizada com sucesso")
+        }
 
 
         if(!trip) return null
@@ -95,7 +120,7 @@
                     <h3 className="font-semibold mt-5">Hóspedes</h3>
                     <p>{guests} Hóspedes</p>
 
-                    <Button className="mt-5">Finalizar compra</Button>
+                    <Button onClick={handleBuyClick} className="mt-5">Finalizar compra</Button>
                 </div>
             </div>
         );
