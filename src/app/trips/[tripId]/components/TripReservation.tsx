@@ -6,6 +6,7 @@ import Input from "@/components/Input";
 import { Trip } from "@prisma/client";
 import { Decimal } from "@prisma/client/runtime/library";
 import { differenceInDays } from "date-fns";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 
@@ -48,15 +49,19 @@ const TripReservation = ({tripId, tripStartDate, tripEndDate, maxGuests, pricePe
 
         //VALIDAR SE A RESERVA ESTA SENDO FEITA DENTRO DE UMA DATA DISPONIVEL
         if(res?.error?.code === 'INVALID_START_DATE'){
-            setError("startDate", {message: "Esta data não esta disponivel", type: "manual"});
+            return setError("startDate", {message: "Esta data não esta disponivel", type: "manual"});
         }
         if(res?.error?.code === 'INVALID_END_DATE'){
             return setError("endDate", {message: "Esta data não esta disponivel", type: "manual"});
         }
+
+        router.push(`/trips/${tripId}/confirmation?startDate=${data.startDate?.toISOString}&endDate=${data.endDate?.toISOString}&guests=${data.guests}`)
     }
 
     const startDate = watch("startDate");
     const endDate = watch("endDate");
+
+    const router = useRouter()
 
     return ( 
         <div className="flex flex-col px-5">

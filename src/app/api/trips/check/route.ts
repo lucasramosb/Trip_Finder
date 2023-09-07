@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { isBefore } from "date-fns";
+import { differenceInDays, isBefore } from "date-fns";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request){
@@ -39,7 +39,7 @@ export async function POST(request: Request){
         )
     }
 
-    if(isBefore(new Date(req.endDate), new Date(trip.endDate))){
+    if(isBefore(new Date(trip.endDate), new Date(trip.startDate))){
         return new NextResponse(JSON.stringify({
             error: {
                 code: 'INVALID_END_DATE'
@@ -57,10 +57,10 @@ export async function POST(request: Request){
             tripId: req.tripId,
             //VERIFICA SE EXISTE UMA RESERVA ENTRE AS DATAS
             startDate:{
-                lte: new Date(req.startDate)
+                lte: new Date(trip.endDate)
             },
             endDate: {
-                gte: new Date(req.endDate)
+                gte: new Date(trip.startDate)
             }
         }
     })
@@ -75,6 +75,8 @@ export async function POST(request: Request){
     }
     
     return new NextResponse(JSON.stringify({
-        success: true
+        success: true,
+        trip,
+        totalPrice: differenceInDays(new Date(req.endDate), new Date(req.startDate)) *  Number(trip.pricePerDay)
     }))
 }

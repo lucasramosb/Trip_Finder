@@ -20,8 +20,8 @@ const TripHeader = ({trip} : TripHeaderProps) => {
                 <h1 className="font-semibold text-xl text-primaryDarker" >{trip.name}</h1>
 
                 <div className="flex items-center gap-1 my-1" >
-                <ReactCountryFlag countryCode={trip.countryCode} svg />
-                <p className="text-xs text-grayPrimary underline">{trip.location}</p>
+                    <ReactCountryFlag countryCode={trip.countryCode} svg />
+                    <p className="text-xs text-grayPrimary underline">{trip.location}</p>
                 </div>
 
                 <p className="text-xs text-grayPrimary">
