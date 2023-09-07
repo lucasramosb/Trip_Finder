@@ -55,7 +55,7 @@ const TripReservation = ({tripId, tripStartDate, tripEndDate, maxGuests, pricePe
             return setError("endDate", {message: "Esta data não esta disponivel", type: "manual"});
         }
 
-        router.push(`/trips/${tripId}/confirmation?startDate=${data.startDate?.toISOString}&endDate=${data.endDate?.toISOString}&guests=${data.guests}`)
+        router.push(`/trips/${tripId}/confirmation?startDate=${data.startDate?.toISOString()}&endDate=${data.endDate?.toISOString()}&guests=${data.guests}`)
     }
 
     const startDate = watch("startDate");
