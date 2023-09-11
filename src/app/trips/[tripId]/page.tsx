@@ -1,8 +1,6 @@
 import { prisma } from "@/lib/prisma";
-import Image from "next/image";
 
 import React from "react";
-import ReactCountryFlag from "react-country-flag";
 import TripHeader from "./components/TripHeader";
 import TripReservation from "./components/TripReservation";
 import TripDescription from "./components/TripDescription";

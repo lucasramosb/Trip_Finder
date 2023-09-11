@@ -104,8 +104,8 @@ import { toast } from "react-toastify";
                     <h3 className="font-semibold text-lg text-primaryDarker mt-3">Informações sobre o preço</h3>
 
                     <div className="flex justify-between mt-1">
-                        <p className="font-sm text-primaryDarker">R${totalPrice}</p>
-                        <p className="font-semibold">{totalPrice}</p>
+                        <p className="font-sm text-primaryDarker">Valor</p>
+                        <p className="font-semibold">R${totalPrice}</p>
                     </div>
                 </div>
 
