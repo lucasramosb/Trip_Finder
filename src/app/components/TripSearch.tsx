@@ -1,26 +1,87 @@
 "use client";
 
+import Button from "@/components/Button";
+import CurrencyInput from "@/components/CurrencyInput";
 import DatePicker from "@/components/DatePicker";
 import Input from "@/components/Input";
-import CurrencyInput from "react-currency-input-field";
+import { useRouter } from "next/navigation";
+import React from "react";
+import { Controller, useForm } from "react-hook-form";
+
+interface TripSearchForm {
+  text: string;
+  startDate: Date | null;
+  budget: string;
+}
 
 const TripSearch = () => {
-    return ( 
-        <div className="container mx-auto p-5 bg-search-background bg-cover bg-center bg-no-repeat">
-            <h1 className="font-semibold text-2xl text-primaryDarker text-center">Encontre sua próxima <span className="text-primary" >Viagem!</span></h1>
+  const router = useRouter();
 
-            <div className="flex flex-col mt-5 gap-4">
-                <Input placeholder="Onde você quer ir ?"/>
+  const {control,formState: { errors },register,handleSubmit,} = useForm<TripSearchForm>();
 
-                <div className="flex gap-3 ">
-                    <DatePicker placeholderText="Data de ida" onChange={() => {}} className="w-full" />
-                    <CurrencyInput intlConfig={{ locale: "pt-BR", currency: "BRL" }} placeholder="Orçamento" className="rounded-lg border border-gray-300 bg-white p-2 text-sm font-normal text-primaryDarker placeholder-black placeholder-opacity-20 outline-none transition-all focus:ring-1 focus:ring-primary w-full"/>
-                </div>
+  const onSubmit = (data: TripSearchForm) => {
+    router.push(`/trips/search?text=${ data.text}&startDate=${data.startDate?.toISOString()}&budget=${data.budget}`);     
+  };
 
-                <button className="bg-primary text-white rounded-lg p-2 text-sm font-medium shadow transition-all hover:bg-primaryDarker">Buscar</button>
-            </div>
+  return (
+    <div className="container mx-auto p-5 bg-search-background bg-cover bg-center bg-no-repeat lg:py-28">
+      <h1 className="font-semibold text-2xl text-primaryDarker text-center lg:text-[2.5rem]">
+        Encontre sua próxima <span className="text-primary">viagem!</span>
+      </h1>
+
+      <div className="flex flex-col gap-4 mt-5 lg:flex-row lg:max-w-[948px] lg:mx-auto lg:p-4 lg:bg-primary lg:mt-12 lg:bg-opacity-20 lg:rounded-lg">
+        <Input
+          placeholder="Onde você quer ir?"
+          error={!!errors.text}
+          errorMessage={errors.text?.message}
+          {...register("text", {
+            required: {
+              value: true,
+              message: "Texto é obrigatório.",
+            },
+          })}
+        />
+
+        <div className="flex gap-4 lg:w-full">
+          <Controller
+            name="startDate"
+            control={control}
+            render={({ field }) => (
+              <DatePicker
+                onChange={field.onChange}
+                selected={field.value}
+                placeholderText="Data Final"
+                className="w-full"
+                minDate={new Date()}
+              />
+            )}
+          />
+
+          <Controller
+            name="budget"
+            control={control}
+            render={({ field }) => (
+              <CurrencyInput
+                allowDecimals={false}
+                placeholder="Orçamento"
+                onValueChange={field.onChange as any}
+                value={field.value}
+                className="w-full"
+                onBlur={field.onBlur}
+              />
+            )}
+          />
         </div>
-     );
-}
- 
+
+        <Button
+          onClick={() => handleSubmit(onSubmit)()}
+          className="lg:w-1/2 lg:h-fit sm:w-full"
+        >
+          Buscar
+        </Button>
+      </div>
+    </div>
+  );
+};
+
 export default TripSearch;
