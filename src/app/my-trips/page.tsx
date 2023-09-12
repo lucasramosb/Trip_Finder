@@ -34,9 +34,12 @@ const MyTrips = async () => {
     
     return ( 
         <div className='container mx-auto p-5'>
-            <h1 className='font-semibold text-primaryDarker'>Minhas Viagens</h1>
-           {reservations.length > 0 ? 
-                (reservations.map((reservation) => <UserReservationItem key={reservation.id} fetchReservations={fetchReservations} reservation={reservation}/>))
+            <h1 className='font-semibold text-primaryDarker text-xl'>Minhas Viagens</h1>
+           {reservations.length > 0 ? (
+                <div className=' flex flex-col lg:grid lg:grid-cols-4 lg:gap-5'>
+                    {reservations.map((reservation) => <UserReservationItem key={reservation.id} fetchReservations={fetchReservations} reservation={reservation}/>)}
+                </div>
+            )
             : 
                 <div className='flex flex-col'>
                     <p className='text-primaryDarker text-xl mt-2'>Você ainda não possui reservas</p>
