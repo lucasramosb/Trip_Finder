@@ -24,7 +24,7 @@ import { toast } from "react-toastify";
 
         useEffect(() => {
             const fetchTrip = async () => {
-                const response = await fetch(`http://localhost:3000/api/trips/check`,{
+                const response = await fetch(`/api/trips/check`,{
                     method: 'POST',
                     body: JSON.stringify({
                         tripId: params.tripId,
@@ -56,7 +56,7 @@ import { toast } from "react-toastify";
         const guests = searchParams.get('guests')
 
         const handleBuyClick = async () => {
-            const res = await fetch('http://localhost:3000/api/trips/reservation', {
+            const res = await fetch('/api/trips/reservation', {
                 method: "POST",
                 body: Buffer.from(
                     JSON.stringify({
