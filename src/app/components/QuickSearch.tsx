@@ -14,33 +14,33 @@ const QuickSearch = () => {
                 <div className="w-full h-[2px] bg-grayPrimary"></div>
             </div>
 
-            <div className="flex w-full justify-between mt-4">
+            <div className="flex w-full justify-between mt-4 lg:mt-10 lg:justify-center gap-40">
                 <Link href={`trips/search?text=hotel`}>
                     <div className="flex flex-col items-center gap- hover:text-primary transition-all">
                         <FaRegBuilding size={35} color='#BBBFBF'/>
 
-                        <p className='text-sm text-grayPrimary'>Hotel</p>
+                        <p className='text-sm text-grayPrimary lg:text-base'>Hotel</p>
                     </div>
                 </Link>
 
                 <Link href={`trips/search?text=Fazenda`}>
                     <div className="flex flex-col items-center gap- hover:text-primary transition-all">
                         <GiFarmTractor size={35} color='#BBBFBF'/>
-                        <p className='text-sm text-grayPrimary'>Fazenda</p>
+                        <p className='text-sm text-grayPrimary lg:text-base'>Fazenda</p>
                     </div>
                 </Link>
 
                 <Link href={`trips/search?text=Chalé`}>
                     <div className="flex flex-col items-center gap- hover:text-primary transition-all">
                         <MdOutlineCottage size={35} color='#BBBFBF'/>
-                        <p className='text-sm text-grayPrimary'>Chalé</p>
+                        <p className='text-sm text-grayPrimary lg:text-base'>Chalé</p>
                     </div>
                 </Link>
 
                 <Link href={`trips/search?text=Pousada`}>
                     <div className="flex flex-col items-center gap- hover:text-primary transition-all">
                         <IoBedOutline size={35} color='#BBBFBF'/>
-                        <p className='text-sm text-grayPrimary'>Pousada</p>
+                        <p className='text-sm text-grayPrimary lg:text-base'>Pousada</p>
                     </div>
                 </Link>
             </div>
