@@ -3,6 +3,7 @@ import { FaRegBuilding } from 'react-icons/fa';
 import { MdOutlineCottage } from 'react-icons/md';
 import { GiFarmTractor } from 'react-icons/gi';
 import { IoBedOutline } from 'react-icons/io5';
+import Link from 'next/link';
 
 const QuickSearch = () => {
     return ( 
@@ -14,26 +15,34 @@ const QuickSearch = () => {
             </div>
 
             <div className="flex w-full justify-between mt-4">
-                <div className="flex flex-col items-center gap-1">
-                    <FaRegBuilding size={35} color='#BBBFBF'/>
+                <Link href={`trips/search?text=hotel`}>
+                    <div className="flex flex-col items-center gap- hover:text-primary transition-all">
+                        <FaRegBuilding size={35} color='#BBBFBF'/>
 
-                    <p className='text-sm text-grayPrimary'>Hotel</p>
-                </div>
-                <div className="flex flex-col items-center gap-1">
-                    <GiFarmTractor size={35} color='#BBBFBF'/>
+                        <p className='text-sm text-grayPrimary'>Hotel</p>
+                    </div>
+                </Link>
 
-                    <p className='text-sm text-grayPrimary'>Fazenda</p>
-                </div>
-                <div className="flex flex-col items-center gap-1">
-                    <MdOutlineCottage size={35} color='#BBBFBF'/>
+                <Link href={`trips/search?text=Fazenda`}>
+                    <div className="flex flex-col items-center gap- hover:text-primary transition-all">
+                        <GiFarmTractor size={35} color='#BBBFBF'/>
+                        <p className='text-sm text-grayPrimary'>Fazenda</p>
+                    </div>
+                </Link>
 
-                    <p className='text-sm text-grayPrimary'>Chalé</p>
-                </div>
-                <div className="flex flex-col items-center gap-1">
-                    <IoBedOutline size={35} color='#BBBFBF'/>
-                    
-                    <p className='text-sm text-grayPrimary'>Pousada</p>
-                </div>
+                <Link href={`trips/search?text=Chalé`}>
+                    <div className="flex flex-col items-center gap- hover:text-primary transition-all">
+                        <MdOutlineCottage size={35} color='#BBBFBF'/>
+                        <p className='text-sm text-grayPrimary'>Chalé</p>
+                    </div>
+                </Link>
+
+                <Link href={`trips/search?text=Pousada`}>
+                    <div className="flex flex-col items-center gap- hover:text-primary transition-all">
+                        <IoBedOutline size={35} color='#BBBFBF'/>
+                        <p className='text-sm text-grayPrimary'>Pousada</p>
+                    </div>
+                </Link>
             </div>
 
         </div>
