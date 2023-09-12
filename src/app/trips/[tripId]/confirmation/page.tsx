@@ -83,7 +83,7 @@ import { toast } from "react-toastify";
         if(!trip) return null
 
         return ( 
-            <div className="container mx-auto">
+            <div className="container mx-auto lg:max-w-[600px]">
                 <h1 className="font-semibold text-xl text-primaryDarker">Sua Viagem</h1>
 
                 <div className="flex flex-col p-5 mt-5 border-grayLighter border-solid border shadow-lg rounded-lg">
