@@ -6,9 +6,11 @@ import Input from "@/components/Input";
 import { Trip } from "@prisma/client";
 import { Decimal } from "@prisma/client/runtime/library";
 import { differenceInDays } from "date-fns";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 interface TripReservationProps {
     tripId: string,
@@ -27,6 +29,8 @@ interface TripReservationForm {
 const TripReservation = ({tripId, tripStartDate, tripEndDate, maxGuests, pricePerDay} : TripReservationProps) => {
 
     const {register, handleSubmit, formState: {errors}, control, watch, setError} = useForm<TripReservationForm>();
+
+    const {status, data} = useSession()
 
     const onSubmit = async (data: TripReservationForm) => {
         const response = await fetch('/api/trips/check',{
@@ -53,6 +57,10 @@ const TripReservation = ({tripId, tripStartDate, tripEndDate, maxGuests, pricePe
         }
         if(res?.error?.code === 'INVALID_END_DATE'){
             return setError("endDate", {message: "Esta data não esta disponivel", type: "manual"});
+        }
+
+        if(status === "unauthenticated"){
+            toast.info("Você precisa estar logado para fazer uma reserva")
         }
 
         router.push(`/trips/${tripId}/confirmation?startDate=${data.startDate?.toISOString()}&endDate=${data.endDate?.toISOString()}&guests=${data.guests}`)
