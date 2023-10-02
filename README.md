@@ -18,7 +18,7 @@ O projeto Trip Finder oferece as seguintes funcionalidades:
 
 ## Tecnologias Utilizadas
 
-O projeto Trip Finder foi desenvolvido com as seguintes tecnologias:
+O projeto foi desenvolvido com as seguintes tecnologias:
 
 - React Js
 - Next Js
