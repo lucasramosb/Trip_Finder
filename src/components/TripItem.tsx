@@ -34,4 +34,4 @@ const TripItem = ({trip}: TripItemProps) => {
     );
 }
  
-export default TripItem;
+export default TripItem; 
